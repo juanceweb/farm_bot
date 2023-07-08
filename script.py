@@ -6,6 +6,7 @@ import win32api, win32con
 
 # TO DO, HACER QUE CAMBIE EL NIVEL DEL RSS SI DA QUE TIENE LEGIONES INACTIVAS > 5 VECES
 
+
 #############################################
 # FUNCIONES BASICAS
 #############################################
@@ -84,6 +85,18 @@ def menu():
     return orden
 
 
+def set_timer():
+    while True:
+        try:
+            timer = int(input("Check again every (in minutes): "))
+            break
+        except:
+            print("Only insert numbers")
+
+    timer_final = timer * 60
+    return timer_final
+
+
 #############################################
 # FUNCIONES
 #############################################
@@ -126,7 +139,6 @@ def check_active_legions():
             return True
 
         else:
-
             press_key("esc")
             return False
     # ninguna legion activa
@@ -174,12 +186,25 @@ def legion_send_farm(rss):
 #     click(1215, 375)
 
 
+def salir_menu():
+    press_key("esc")
+    time.sleep(4)
+
+
+def acomodar_profundidad():
+    press_key("space")
+    time.sleep(2)
+    press_key("space")
+
+
 def main():
     global ord_copy
     while True:
         # esta online
         if esta_online():
+            salir_menu()
             esta_en_city()
+            acomodar_profundidad()
             while True:
                 # no hay legiones inactivas
                 if check_active_legions():
@@ -208,6 +233,7 @@ def main():
 ##############################################################################################
 
 ord = menu()
+timer = set_timer()
 time.sleep(5)
 
 ord_copy = ord.copy()
@@ -219,8 +245,12 @@ while True:
     main()
     print(f"fin: {datetime.now().strftime('%H:%M:%S')}")
     print("-------------------------------")
-    time.sleep(840)
+    time.sleep(timer - 60)
     print(datetime.now().strftime("%H:%M:%S"))
     print("Comienza en un minuto...")
+    time.sleep(55)
+    contador = (5, 4, 3, 2, 1)
+    for x in contador:
+        print(x)
+        time.sleep(1)
     print("-------------------------------")
-    time.sleep(60)
